@@ -5,3 +5,5 @@ staticfiles
 
 *.log.*
 *.log
+*.pyc
+*.idea*
