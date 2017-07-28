@@ -104,3 +104,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'beaconProject/static'),
 ]
+
+USER_PRESENCE_TIMESTAMP = 60
+USER_PRESENCE_END_TIMESTAMP = 30
