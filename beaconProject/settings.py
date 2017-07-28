@@ -26,7 +26,7 @@ SECRET_KEY = 'w#wn2aasv88t%w4=6pwk&o1!*mltz(r)kqjo$(hh2ukeno6!8c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['stormy-chamber-70694.herokuapp.com']
 
 
 # Application definition
