@@ -92,7 +92,7 @@ padding: 8px 12px !important;
 .main-center{
  	margin-top: 30px;
  	margin: 0 auto;
- 	max-width: 400px;
+ 	max-width: 75%;
     padding: 10px 40px;
 	background:#009edf;
 	    color: #FFF;
@@ -114,4 +114,9 @@ span.input-group-addon i {
 .login-register{
 	font-size: 11px;
 	text-align: center;
+}
+
+.room-availability-table{
+    margin-top: 5%;
+    color: black;
 }

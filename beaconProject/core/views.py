@@ -1,4 +1,7 @@
 import datetime
+import pytz
+from dateutil import tz
+from dateutil.tz import tzutc
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -6,22 +9,17 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from beaconProject.core.calendar_events import event_lister
 from beaconProject.core.models import MeetingRoom, Presence
 from beaconProject.settings import USER_PRESENCE_TIMESTAMP, USER_PRESENCE_END_TIMESTAMP
 
 
 @login_required
 def home(request):
-    return render(request, "base.html", context={})
-
-
-@login_required()
-def add_presence_log(request):
-    user_email = request.GET.get('user')
-    beacon_id = request.GET.get('beacon')
-    meeting_room = MeetingRoom.objects.get(beacon_id=beacon_id)
-    user = User.objects.get(email=user_email)
-    Presence.objects.create(meeting_room=meeting_room, user=user, timestamp=datetime.datetime.now)
+    meeting_room = MeetingRoom.objects.get(name="godfather")
+    start = datetime.datetime(2017, 7, 27, 0, 0, tzinfo=tzutc())
+    end = datetime.datetime(2017, 7, 28, 23, 50, tzinfo=tzutc())
+    event_lister.get_events(meeting_room.room_resource_id, start, end)
     return render(request, "base.html", context={})
 
 
@@ -46,8 +44,16 @@ def update_presence_log(request):
     return HttpResponse(status=200)
 
 
-def update_presence_log_on_end_meeting(request):
-    timestamp = datetime.datetime.now() - datetime.timedelta(seconds=USER_PRESENCE_END_TIMESTAMP)
-    logs = Presence.objects.filter(timestamp__lte=timestamp, out_time__isnull=True)
-    logs.update(out_time=datetime.datetime.now())
-    return HttpResponse(status=200)
+def get_meeting_room_status(request):
+    presence_logs = Presence.objects.select_related('meeting_room').exclude(out_time__isnull=True)
+    presence_set = set()
+    room_details = []
+    for log in presence_logs:
+        presence_set.add(log.meeting_room.name)
+    meeting_rooms = MeetingRoom.objects.all()
+    for room in meeting_rooms:
+        if room.name in list(presence_set):
+            room_details.append({'availability': 1, 'details': room})
+        else:
+            room_details.append({'availability': 0, 'details': room})
+    return render(request, "base.html", context={'meeting_rooms': room_details})
