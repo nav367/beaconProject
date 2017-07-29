@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'beaconProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', 'beacon'),
-        'USER': os.environ.get('DB_USER', 'beacon'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'beacon@1234'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'NAME': os.environ.get('DB_NAME', 'dc5v8073ar80uo'),
+        'USER': os.environ.get('DB_USER', 'mqummujujcbbzd'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'b5f0f52e57cabf229cc4e557691fbf26181af290d478ae606019b742c71f9cd9'),
+        'HOST': os.environ.get('DB_HOST', 'ec2-174-129-37-15.compute-1.amazonaws.com'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     },
 }

@@ -64,7 +64,7 @@ def update_presence_log(request):
 
 def get_meeting_room_status(request):
     presence_logs = Presence.objects.select_related('meeting_room').filter(
-        timestamp__gte=datetime.datetime(2017, 7, 28, 0, 0, tzinfo=tzutc()) - datetime.timedelta(seconds=USER_PRESENCE_TIMESTAMP), out_time__isnull=True)
+        timestamp__gte=datetime.datetime.now() - datetime.timedelta(seconds=USER_PRESENCE_TIMESTAMP), out_time__isnull=True)
     presence_set = set()
     room_details = []
     all_rooms = MeetingRoom.objects.all()
@@ -111,7 +111,6 @@ def get_meeting_reports(request):
     date1 = datetime.datetime.strptime(date, "%Y-%m-%d")
     today_min = datetime.datetime.combine(date1, datetime.time.min)
     today_max = datetime.datetime.combine(date1, datetime.time.max)
-    print today_max, today_min
     all_meetings = Meeting.objects.filter(start_time__range=(today_min, today_max), end_time__range=(today_min, today_max))
     meeting_data = []
     for meeting in all_meetings:
@@ -125,3 +124,10 @@ def get_meeting_reports(request):
 
 def get_report_home(request):
     return render(request, "reports.html", context={})
+
+
+def update_last_presence(request):
+    timestamp = datetime.datetime.now() - datetime.timedelta(seconds=USER_PRESENCE_END_TIMESTAMP)
+    logs = Presence.objects.filter(timestamp__lte=timestamp, out_time__isnull=True)
+    logs.update(out_time=datetime.datetime.now())
+    return HttpResponse(json.dumps({'status': 200}), content_type="application/json")
