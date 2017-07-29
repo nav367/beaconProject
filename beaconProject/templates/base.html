@@ -7,48 +7,49 @@
         <!-- Website Font style -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
         {% load static %}
-        <link rel="stylesheet" href="{% static 'base.css' %}">
-        <!-- Google Fonts -->
-        <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-        <title>Admin</title>
-    </head>
-    <body>
-        <div class="container">
+		<link rel="stylesheet" href="{% static 'base.css' %}">
+		<!-- Google Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+		<title>Admin</title>
+	</head>
+	<body>
+		<div class="container">
             <div class="row header-row">
                 <div class="header">Real Time Room Availability</div>
             </div>
-            <div class="row main">
-                <div class="main-login main-center">
-                <h3>Room Status</h3>
-                    <div class="row room-availability-table">
-                        <table class="table table-hover table-bordered">
-                        <thead>
-                          <tr>
-                            <th>Room</th>
-                            <th>Floor</th>
-                            <th>Availability</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        {% for room in meeting_rooms %}
-                        <tr>
-                            <td>{{ room.details.name }}</td>
-                            <td>{{ room.details.floor }}</td>
-                            <td>{% if room.availability %}<span class="glyphicon glyphicon-ok"></span>
-                                {% else %}<span class="glyphicon glyphicon-remove"></span>
-                                {% endif %}</td>
-                          </tr>
+			<div class="row main">
+				<div class="main-login main-center">
+				<h3>Room Status</h3>
+					<div class="row room-availability-table">
+						<table class="table table-hover table-bordered">
+						<thead>
+						  <tr>
+							<th>Room</th>
+							<th>Floor</th>
+							<th>Availability</th>
+						  </tr>
+						</thead>
+						<tbody>
+						{% for room in meeting_rooms %}
+						<tr>
+							<td>{{ room.details.name }}</td>
+							<td>{{ room.details.floor }}</td>
+							<td>{% if room.availability %}<span class="glyphicon glyphicon-ok"></span>
+								{% else %}<span class="glyphicon glyphicon-remove"></span>
+								{% endif %}</td>
+						  </tr>
                         {% endfor %}
                         </tbody>
                       </table>
                     </div>
-                </div>
-            </div>
-            <div class="row report-button">
-                <button class="btn btn-primary" type="button"><a href="/app/view-reports/">View Reports</a></button>
-            </div>
-        </div>
+				</div>
+			</div>
+			<div class="row report-button">
+				<button class="btn btn-primary" type="button"><a href="/app/view-reports/">View Reports</a></button>
+			</div>
+		</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>

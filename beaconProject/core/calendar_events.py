@@ -15,7 +15,6 @@ class EventLister:
         function to get events between start and end time provided
         """
         event_response = requests.get(self.CALENDAR_API.format(room_id,start_time,end_time)).json()
-        print event_response,"resp"
         return event_response
 
 
