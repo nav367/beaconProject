@@ -64,7 +64,7 @@ def update_presence_log(request):
 
 def get_meeting_room_status(request):
     presence_logs = Presence.objects.select_related('meeting_room').filter(
-        timestamp__gte=datetime.datetime.now() - datetime.timedelta(seconds=USER_PRESENCE_TIMESTAMP), out_time__isnull=True)
+        timestamp__gte=timezone.now() - datetime.timedelta(seconds=USER_PRESENCE_TIMESTAMP), out_time__isnull=True)
     presence_set = set()
     room_details = []
     all_rooms = MeetingRoom.objects.all()
