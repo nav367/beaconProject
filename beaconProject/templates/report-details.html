@@ -1,7 +1,7 @@
 
 			<div class="row main page-layout">
 				<div class="main-login main-center">
-				<h3>Today's Meetings</h3>
+				<h3>Planned Meetings</h3>
                         {% for meeting in meetings %}
                         <div class="col-sm-4 room-availability-table detail-card">
                             <div class="card meeting-card">
@@ -23,9 +23,8 @@
 
             <div class="row main">
 				<div class="main-login main-center">
-				<h3>Today's Unplanned Meetings</h3>
-
-
+				<h3>Unplanned Meetings</h3>
+                        {% if unplanned %}
                         <div class="col-sm-4 room-availability-table detail-card">
                             <div class="card meeting-card">
                               <div class="card-block">
@@ -41,5 +40,6 @@
                               </div>
                             </div>
                         </div>
+                        {% endif %}
 				</div>
 			</div>
