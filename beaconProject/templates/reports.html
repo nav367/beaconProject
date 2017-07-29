@@ -14,17 +14,28 @@
 
 		<title>Admin</title>
 	</head>
-	<body>
+	<body class="grey lighten-3">
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper grey lighten-2">
+          {% if request.user.is_authenticated %}
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#"><i>Hello {{request.user.username}}</i></a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
 		<div class="container">
-			<div class="row main">
+			<div class="row main page-layout">
 				<div class="main-login main-center">
 				<h5>Today's Meetings</h5>
-
                         {% for meeting in meetings %}
                         <div class="col-sm-4 room-availability-table">
                             <div class="card meeting-card">
                               <div class="card-block">
-                                <h4 class="card-title">{{meeting.id}}</h4>
+                                <h4 class="card-title">{{meeting.room}}</h4>
                                 <h6 class="card-subtitle mb-2 text-muted meeting-timing">{{meeting.start_time}}-{{meeting.end_time}}</h6>
                                 {% for presence in meeting.presence %}
                                   <div class="row">
@@ -36,7 +47,29 @@
                             </div>
                         </div>
                         {% endfor %}
+				</div>
+			</div>
 
+            <div class="row main">
+				<div class="main-login main-center">
+				<h5>Today's Unplanned Meetings</h5>
+
+
+                        <div class="col-sm-4 room-availability-table">
+                            <div class="card meeting-card">
+                              <div class="card-block">
+                                <!--<h4 class="card-title">{{meeting.id}}</h4>-->
+                                  {% for meeting in unplanned %}
+                                <h6 class="card-subtitle mb-2 text-muted meeting-timing">{{meeting.meeting_room}}</h6>
+
+                                  <div class="row">
+                                  <span class="col-sm-4 card-text">{{meeting.user}}</span> <span class="col-sm-8 presence">{{meeting.in_time}}-{{meeting.out_time}}</span>
+                                  <br>
+                                  </div>
+                                {% endfor %}
+                              </div>
+                            </div>
+                        </div>
 				</div>
 			</div>
 		</div>
