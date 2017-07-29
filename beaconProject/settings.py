@@ -119,5 +119,5 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-USER_PRESENCE_TIMESTAMP = 60
-USER_PRESENCE_END_TIMESTAMP = 30
+USER_PRESENCE_TIMESTAMP = 90
+USER_PRESENCE_END_TIMESTAMP = 60
