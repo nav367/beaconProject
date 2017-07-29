@@ -11,6 +11,7 @@
 		<!-- Google Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 		<title>Admin</title>
 	</head>
@@ -19,6 +20,26 @@
             <div class="row header-row">
                 <div class="header">Real Time Room Availability</div>
             </div>
+
+
+            <div class="row">
+
+                <form method="get" id="date-form">
+                    <div class='col-sm-3'>
+                  <div class="form-group"> <!-- Date input -->
+                    <label class="control-label" for="date">Choose Date:</label>
+                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date"/>
+                  </div></div>
+                    <div class='col-sm-3'>
+                  <div class="form-group"> <!-- Submit button -->
+                    <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+                  </div>
+                    </div>
+                 </form>
+            </div>
+            <div id="meeting-details"></div>
+
+
 			<div class="row main page-layout">
 				<div class="main-login main-center">
 				<h3>Today's Meetings</h3>
@@ -68,5 +89,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    {% load static %}
+    <script src="{% static 'base.js' %}" type="javascript"></script>
 	</body>
 </html>
