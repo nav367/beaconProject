@@ -107,8 +107,11 @@ def get_unplanned_meetings(min_time, max_time):
     return presences
 
 def get_meeting_reports(request):
-    today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)-datetime.timedelta(days=1)
-    today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+    date = request.GET.get('date')
+    date1 = datetime.datetime.strptime(date, "%Y-%m-%d")
+    today_min = datetime.datetime.combine(date1, datetime.time.min)
+    today_max = datetime.datetime.combine(date1, datetime.time.max)
+    print today_max, today_min
     all_meetings = Meeting.objects.filter(start_time__range=(today_min, today_max), end_time__range=(today_min, today_max))
     meeting_data = []
     for meeting in all_meetings:
@@ -117,4 +120,8 @@ def get_meeting_reports(request):
                              'room': meeting.meeting_room_id,
                              'presence':get_timing_for_user(meeting)})
     unplanned_presences = get_unplanned_meetings(today_min,today_max)
-    return render(request, "reports.html", context={'meetings':meeting_data, 'unplanned':unplanned_presences})
+    return render(request, "report-details.html", context={'meetings':meeting_data, 'unplanned':unplanned_presences})
+
+
+def get_report_home(request):
+    return render(request, "reports.html", context={})

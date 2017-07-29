@@ -11,6 +11,7 @@
 		<!-- Google Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 		<title>Admin</title>
 	</head>
@@ -19,54 +20,29 @@
             <div class="row header-row">
                 <div class="header">Real Time Room Availability</div>
             </div>
-			<div class="row main page-layout">
-				<div class="main-login main-center">
-				<h3>Today's Meetings</h3>
-                        {% for meeting in meetings %}
-                        <div class="col-sm-4 room-availability-table detail-card">
-                            <div class="card meeting-card">
-                              <div class="card-block">
-                                <h4 class="card-title">{{meeting.room}}</h4>
-                                <h6 class="card-subtitle mb-2 text-muted meeting-timing">{{meeting.start_time}}-{{meeting.end_time}}</h6>
-                                {% for presence in meeting.presence %}
-                                  <div class="row user-detail">
-                                  <span class="col-sm-6 card-text user-presence">{{presence.user}}</span> <span class="col-sm-6 presence">{{presence.presence}}</span>
-                                  <br>
-                                  </div>
-                              {% endfor %}
-                              </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-				</div>
-			</div>
-
-            <div class="row main">
-				<div class="main-login main-center">
-				<h3>Today's Unplanned Meetings</h3>
 
 
-                        <div class="col-sm-4 room-availability-table detail-card">
-                            <div class="card meeting-card">
-                              <div class="card-block">
-                                <!--<h4 class="card-title">{{meeting.id}}</h4>-->
-                                  {% for meeting in unplanned %}
-                                <h4  class="card-subtitle mb-2 text-muted meeting-timing">{{meeting.meeting_room}}</h4>
+            <div class="row">
 
-                                  <div class="row user-detail">
-                                  <span class="col-sm-4 card-text user-presence">{{meeting.user}}</span> <span class="col-sm-8 presence">{{meeting.in_time}}-{{meeting.out_time}}</span>
-                                  <br>
-                                  </div>
-                                {% endfor %}
-                              </div>
-                            </div>
-                        </div>
-				</div>
-			</div>
+                <form method="get" id="date-form" style="padding-top:2%;">
+                  <div class="col-sm-offset-3 col-sm-4"> <!-- Date input -->
+                    <label class="control-label" for="date">Choose Date:</label>
+                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date"/>
+                  </div>
+                  <div class="col-sm-2" style="padding-top:35px;"> <!-- Submit button -->
+                    <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+                  </div>
+                 </form>
+            </div>
+            <div id="meeting-details"></div>
+
 		</div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    {% load static %}
+    <script src="{% static 'base.js' %}" type="text/javascript"></script>
 	</body>
 </html>
