@@ -2,11 +2,8 @@
 <html lang="en">
     <head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
 		<!-- Website CSS style -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 		<!-- Website Font style -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
         {% load static %}
@@ -21,34 +18,26 @@
 		<div class="container">
 			<div class="row main">
 				<div class="main-login main-center">
-				<h5>Available Rooms</h5>
-					<div class="col-sm-10 room-availability-table">
-						<table class="table table-hover">
-						<thead>
-						  <tr>
-							<th>Room</th>
-							<th>Floor</th>
-							<th>Availability</th>
-						  </tr>
-						</thead>
-						<tbody>
-						{% for room in meeting_rooms %}
-						<tr>
-							<td>{{ room.details.name }}</td>
-							<td>{{ room.details.floor }}</td>
-							<td>{% if room.availability %}<span class="glyphicon glyphicon-ok"></span>
-								{% else %}<span class="glyphicon glyphicon-remove"></span>
-								{% endif %}</td>
-						  </tr>
-                        {% endfor %}
-						</tbody>
-					  </table>
+				<h5>Today's Meetings</h5>
 
-                    </div>
+                        {% for meeting in meetings %}
+                        <div class="col-sm-4 room-availability-table">
+                            <div class="card meeting-card">
+                              <div class="card-block">
+                                <h4 class="card-title">{{meeting.id}}</h4>
+                                <h6 class="card-subtitle mb-2 text-muted meeting-timing">{{meeting.start_time}}-{{meeting.end_time}}</h6>
+                                {% for presence in meeting.presence %}
+                                  <div class="row">
+                                  <span class="col-sm-6 card-text">{{presence.user}}</span> <span class="col-sm-6 presence">{{presence.presence}}</span>
+                                  <br>
+                                  </div>
+                              {% endfor %}
+                              </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
 				</div>
-			</div>
-			<div class="row">
-				<a href="/app/view-reports/" class="btn">View Reports</a>
 			</div>
 		</div>
 

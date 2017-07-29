@@ -15,13 +15,10 @@ class MeetingRoom(models.Model):
     def __str__(self):
         return self.name
 
-    def __str__(self):
-        return str(self.name)
-
 
 class Meeting(models.Model):
     meeting_id = models.CharField(max_length=15)
-    user = models.ForeignKey(User)
+    user = models.ManyToManyField(User)
     meeting_room_id = models.ForeignKey(MeetingRoom)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
