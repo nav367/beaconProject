@@ -30,3 +30,4 @@ class Presence(models.Model):
     timestamp = models.DateTimeField()
     in_time = models.DateTimeField(null=True, blank=True)
     out_time = models.DateTimeField(null=True, blank=True)
+    planned_meeting = models.BooleanField(default=False)

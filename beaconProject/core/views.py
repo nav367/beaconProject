@@ -1,4 +1,6 @@
 import datetime
+import json
+
 import pytz
 from dateutil import tz
 from dateutil.tz import tzutc
@@ -10,6 +12,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django.utils import timezone
+
 from beaconProject.core.calendar_events import event_lister
 from beaconProject.core.models import MeetingRoom, Presence, Meeting
 from beaconProject.settings import USER_PRESENCE_TIMESTAMP, USER_PRESENCE_END_TIMESTAMP
@@ -29,22 +33,33 @@ def update_presence_log(request):
     #     "user_id": 1,
     #     "beacon_id": 1
     # }
-    user_id = request.POST.get('user_id')
-    beacon_id = request.POST.get('beacon_id')
-    timestamp = datetime.datetime.now() - datetime.timedelta(seconds=USER_PRESENCE_TIMESTAMP)
+    user_id = request.GET.get('user_id')
+    beacon_id = request.GET.get('beacon_id')
+    timestamp = timezone.now() - datetime.timedelta(seconds=USER_PRESENCE_TIMESTAMP)
     user = User.objects.get(email=user_id)
     meeting_room = MeetingRoom.objects.get(beacon_id=beacon_id)
     logs = Presence.objects.filter(user=user,
                                    in_time__gte=timestamp)
     if not logs:
-        Presence.objects.create(user=user,
+        meetings = Meeting.objects.filter(user=user, meeting_room_id=meeting_room,
+                                          start_time__lte=timezone.now(), end_time__gte=timezone.now())
+        if meetings:
+            Presence.objects.create(user=user,
                                 meeting_room=meeting_room,
-                                timestamp=datetime.datetime.now(),
-                                in_time=datetime.datetime.now(),
-                                out_time=None)
+                                timestamp=timezone.now(),
+                                in_time=timezone.now(),
+                                out_time=None,
+                                planned_meeting=True)
+        else:
+            Presence.objects.create(user=user,
+                                    meeting_room=meeting_room,
+                                    timestamp=timezone.now(),
+                                    in_time=timezone.now(),
+                                    out_time=None,
+                                    planned_meeting=False)
     else:
-        logs.update(timestamp=datetime.datetime.now())
-    return HttpResponse(status=200)
+        logs.update(timestamp=timezone.now())
+    return HttpResponse(json.dumps({'status':200}), content_type="application/json")
 
 
 def get_meeting_room_status(request):
@@ -84,16 +99,22 @@ def get_timing_for_user(meeting):
             users_presence.append({'user': user, 'presence': 'Absent'})
     return users_presence
 
+def get_unplanned_meetings(min_time, max_time):
+    presences = Presence.objects.filter(out_time__isnull=False, planned_meeting=False, in_time__range=(min_time,max_time)).order_by('meeting_room')
+    for p in presences:
+        p.in_time = p.in_time.time()
+        p.out_time = p.out_time.time()
+    return presences
 
 def get_meeting_reports(request):
-    today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+    today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)-datetime.timedelta(days=1)
     today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
     all_meetings = Meeting.objects.filter(start_time__range=(today_min, today_max), end_time__range=(today_min, today_max))
     meeting_data = []
     for meeting in all_meetings:
         meeting_data.append({'start_time':meeting.start_time.time(),
                              'end_time':meeting.end_time.time(),
-                             'id': meeting.meeting_id,
+                             'room': meeting.meeting_room_id,
                              'presence':get_timing_for_user(meeting)})
-    
-    return render(request, "reports.html", context={'meetings':meeting_data})
+    unplanned_presences = get_unplanned_meetings(today_min,today_max)
+    return render(request, "reports.html", context={'meetings':meeting_data, 'unplanned':unplanned_presences})

@@ -1,10 +1,3 @@
-/*
-/* Created by Filipe Pina
- * Specific styles of signin, register, component
- */
-/*
- * General styles
- */
 #playground-container {
     height: 500px;
     overflow: hidden !important;
@@ -13,7 +6,6 @@
 body, html{
      height: 100%;
  	background-repeat: no-repeat;
- 	background:url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);
  	font-family: 'Oxygen', sans-serif;
 	    background-size: cover;
 }
@@ -92,15 +84,17 @@ padding: 8px 12px !important;
 .main-center{
  	margin-top: 30px;
  	margin: 0 auto;
- 	max-width: 75%;
     padding: 10px 40px;
-	background:#009edf;
-	    color: #FFF;
     text-shadow: none;
+    background-color: #2bbbad;
 	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
+}
+.header-text{
+background:#009edf;
+	    color: #FFF;
 }
 span.input-group-addon i {
     color: #009edf;
@@ -129,4 +123,8 @@ padding: 12px;
 .meeting-timing {
     border-bottom: 1px solid #857e7e;
     padding-bottom: 5px;
+}
+
+.page-layout {
+    margin-top: 10%;
 }
