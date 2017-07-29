@@ -9,14 +9,16 @@ from django.db import models
 class MeetingRoom(models.Model):
     name = models.CharField(max_length=20)
     beacon_id = models.CharField(max_length=10)
+    room_resource_id = models.CharField(max_length=100, null=True, blank=True)
+    floor = models.CharField(max_length=5, null=True, blank=True)
 
     def __str__(self):
-        return str(self.name)
+        return self.name
 
 
 class Meeting(models.Model):
     meeting_id = models.CharField(max_length=15)
-    user = models.ForeignKey(User)
+    user = models.ManyToManyField(User)
     meeting_room_id = models.ForeignKey(MeetingRoom)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
