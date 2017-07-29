@@ -5,10 +5,15 @@
 /*
  * General styles
  */
-body, html{
+body, html {
     height: 100%;
- 	font-family: 'Oxygen', sans-serif;
-	    background-size: cover;
+    font-family: 'Oxygen', sans-serif;
+}
+
+#playground-container {
+    height: 500px;
+    overflow: hidden !important;
+    -webkit-overflow-scrolling: touch;
 }
 
 .main{
@@ -57,17 +62,15 @@ input::-webkit-input-placeholder {
 }
 
 .main-center{
- 	margin-top: 30px;
- 	margin: 0 auto;
- 	max-width: 75%;
     padding: 10px 40px;
+    width: 60%;
     text-shadow: none;
 	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 }
-.room-availability-table, .report-button, .header-row {
+.room-availability-table, .report-button, .header-row, .main {
     justify-content: center;
     display: flex;
 }
@@ -107,4 +110,3 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
     text-align: center;
     padding: 16px;
     color: white;
-}
