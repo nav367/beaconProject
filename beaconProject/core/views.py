@@ -128,7 +128,6 @@ def get_report_home(request):
 
 
 def update_last_presence(request):
-    print "AYYYYAAA"
     timestamp = datetime.datetime.now() - datetime.timedelta(seconds=USER_PRESENCE_END_TIMESTAMP)
     logs = Presence.objects.filter(timestamp__lte=timestamp, out_time__isnull=True)
     logs.update(out_time=datetime.datetime.now())
