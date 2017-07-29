@@ -24,9 +24,9 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'w#wn2aasv88t%w4=6pwk&o1!*mltz(r)kqjo$(hh2ukeno6!8c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['stormy-chamber-70694.herokuapp.com']
+ALLOWED_HOSTS = ['stormy-chamber-70694.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -38,11 +38,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'beaconProject.core'
+    'beaconProject.core',
+    'whitenoise.runserver_nostatic',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -105,10 +107,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'beaconProject/staticfiles')
+STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')
 STATIC_URL = '/static/'
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'public')
+# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'beaconProject/static'),
+    os.path.join(BASE_DIR, 'beaconProject/static'),
 ]
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 USER_PRESENCE_TIMESTAMP = 60
 USER_PRESENCE_END_TIMESTAMP = 30
