@@ -111,7 +111,6 @@ def get_meeting_reports(request):
     date1 = datetime.datetime.strptime(date, "%Y-%m-%d")
     today_min = datetime.datetime.combine(date1, datetime.time.min)
     today_max = datetime.datetime.combine(date1, datetime.time.max)
-    print today_max, today_min
     all_meetings = Meeting.objects.filter(start_time__range=(today_min, today_max), end_time__range=(today_min, today_max))
     meeting_data = []
     for meeting in all_meetings:
